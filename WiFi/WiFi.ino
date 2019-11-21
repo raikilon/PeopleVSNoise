@@ -13,19 +13,19 @@ void setup()
   while (!Serial1);
   Serial.println("Started Serial1");
   
-  sendData("AT\r\n",2000,DEBUG);
-  sendData("AT+RST\r\n", 2000, DEBUG); // reset module
-  sendData("AT+CWMODE=1\r\n", 1000, DEBUG); // configure as sta
-  sendData("AT+CWLAP\r\n", 1000, DEBUG); // show AP
+//  sendData("AT\r\n",2000,DEBUG);
+//  sendData("AT+RST\r\n", 2000, DEBUG); // reset module
+//  sendData("AT+CWMODE=1\r\n", 1000, DEBUG); // configure as sta
+//  sendData("AT+CWLAP\r\n", 1000, DEBUG); // show AP
 }
 void loop()
 {
-//  if (Serial.available()){
-//    Serial1.write(Serial.read());
-//  }
-//  if (Serial1.available()){
-//    Serial.write(Serial1.read());
-//  }
+  if (Serial.available()){
+    Serial1.write(Serial.read());
+  }
+  if (Serial1.available()){
+    Serial.write(Serial1.read());
+  }
 }
 
 String sendData(String command, const int timeout, boolean debug)
