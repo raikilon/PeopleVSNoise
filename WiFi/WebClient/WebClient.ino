@@ -13,11 +13,11 @@
 */
 
 #include <WiFiEspAT.h>
-const char ssid[] = "Alucard_N";    // your network SSID (name)
-const char pass[] = "----";    // your network password (use for WPA, or use as key for WEP)
+const char ssid[] = "noli";    // your network SSID (name)
+const char pass[] = "Nolinoli";    // your network password (use for WPA, or use as key for WEP)
 
 
-const char* server = "arduino.cc";
+const char* server = "192.168.43.75";
 
 WiFiClient client;
 
@@ -49,8 +49,8 @@ void setup() {
   //  use following lines if you want to connect with bssid
   //  const byte bssid[] = {0x8A, 0x2F, 0xC3, 0xE9, 0x25, 0xC0};
   //  int status = WiFi.begin(ssid, pass, bssid);
-  IPAddress ip(192, 168, 0, 50);
-  IPAddress gw(192, 168, 0, 1);
+  IPAddress ip(192, 168, 43, 10);
+  IPAddress gw(192, 168, 43, 1);
   IPAddress nm(255, 255, 255, 0);
   WiFi.config(ip, gw, gw, nm);
   int status = WiFi.begin(ssid, pass);
@@ -67,15 +67,17 @@ void setup() {
   }
 
   Serial.println("Starting connection to server...");
-  if (client.connect(server, 80)) {
+  if (client.connect(server, 5000)) {
     Serial.println("connected to server");
 
-    client.println("GET /asciilogo.txt HTTP/1.1");
-    client.print("Host: ");
-    client.println(server);
-    client.println("Connection: close");
-    client.println();
-    client.flush();
+    String msg = "{\"username\":\"test\"}";
+    String post = "POST /data HTTP/1.1 \r\n Host: "+ String(server) + ":5000 \r\n Content-Length: " + String(msg.length()) + "\r\n Content-Type: application/json \r\n\r\n" + msg + "\r\n";
+    Serial.println(post);
+    char copy[post.length()];
+    post.toCharArray(copy,post.length());
+    client.write(copy);
+    
+    //client.flush();
   }
 }
 
