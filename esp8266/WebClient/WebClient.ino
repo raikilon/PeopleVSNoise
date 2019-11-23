@@ -13,9 +13,9 @@
 */
 
 #include <WiFiEspAT.h>
+
 const char ssid[] = "noli";    // your network SSID (name)
 const char pass[] = "Nolinoli";    // your network password (use for WPA, or use as key for WEP)
-
 
 const char* server = "192.168.43.75";
 
@@ -70,12 +70,22 @@ void setup() {
   if (client.connect(server, 5000)) {
     Serial.println("connected to server");
 
-    String msg = "{\"username\":\"test\"}";
-    String post = "POST /data HTTP/1.1 \r\n Host: "+ String(server) + ":5000 \r\n Content-Length: " + String(msg.length()) + "\r\n Content-Type: application/json \r\n\r\n" + msg + "\r\n";
-    Serial.println(post);
-    char copy[post.length()];
-    post.toCharArray(copy,post.length());
-    client.write(copy);
+//    String msg = "{\"username\":\"test\"}";
+//    String post = "POST /data HTTP/1.1 \r\n Host: "+ String(server) + ":5000 \r\n Content-Length: " + String(msg.length()) + "\r\n Content-Type: application/json \r\n\r\n" + msg + "\r\n";
+//    Serial.println(post);
+//    char copy[post.length()];
+//    post.toCharArray(copy,post.length());
+//    client.write(copy);
+
+    String PostData = "{\"username\":\"test\"}";
+    client.println("POST /data HTTP/1.1");
+    client.println("User-Agent: Arduino/1.0");
+    client.println("Connection: close");
+    client.print("Content-Length: ");
+    client.println(PostData.length());
+    client.println("Content-Type: application/json");
+    client.println();
+    client.println(PostData);
     
     //client.flush();
   }

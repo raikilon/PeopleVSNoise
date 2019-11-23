@@ -108,7 +108,7 @@ public:
       uint8_t encryptionType = ENC_TYPE_CCMP, uint8_t maxConnections = 0, bool hidden = false);
   bool endAP(bool persistent = false);
 
-  bool configureAP(IPAddress ip, IPAddress gateway = INADDR_NONE, IPAddress subnet = INADDR_NONE);
+  bool configureAP(IPAddress ip, IPAddress gateway, IPAddress subnet);
 
   uint8_t* apMacAddress(uint8_t* mac);
   const char* apSSID(char*);
