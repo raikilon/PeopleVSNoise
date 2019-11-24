@@ -3,8 +3,10 @@
 // ---------------------------------------------------------------------------
 
 #include <NewPing.h>
+// first sensor
 const int trigPin1 = 3;
-const int echoPin1 = 2;
+const int echoPin1 = 2; // never connect directly to Arduino Nano 33 because it is 5v
+// second sensor
 const int trigPin2 = 5;
 const int echoPin2 = 4;
 

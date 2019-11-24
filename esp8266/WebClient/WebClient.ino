@@ -1,23 +1,14 @@
-/*
-  Web client
 
-  This sketch connects to a website (http://arduino.cc)
-  using the WiFi module.
-
-  created 13 July 2010
-  by dlf (Metodo2 srl)
-  modified 31 May 2012
-  by Tom Igoe
-  modified in Jul 2019 for WiFiEspAT library
-  by Juraj Andrassy https://github.com/jandrassy
-*/
+// ---------------------------------------------------------------------------
+// Install WiFiEspAT from out github (original version does not work)
+// ---------------------------------------------------------------------------
 
 #include <WiFiEspAT.h>
 
-const char ssid[] = "noli";    // your network SSID (name)
+const char ssid[] = "noli";    // your network SSID
 const char pass[] = "Nolinoli";    // your network password (use for WPA, or use as key for WEP)
 
-const char* server = "192.168.43.75";
+const char* server = "192.168.43.75"; // server adress
 
 WiFiClient client;
 
@@ -31,7 +22,6 @@ void setup() {
   if (WiFi.status() == WL_NO_MODULE) {
     Serial.println();
     Serial.println("Communication with WiFi module failed!");
-    // don't continue
     while (true);
   }
 
@@ -39,20 +29,16 @@ void setup() {
 
   WiFi.setPersistent(); // set the following WiFi connection as persistent
 
-  //  uncomment this lines for persistent static IP. set addresses valid for your network
-
-
   Serial.println();
   Serial.print("Attempting to connect to SSID: ");
   Serial.println(ssid);
 
-  //  use following lines if you want to connect with bssid
-  //  const byte bssid[] = {0x8A, 0x2F, 0xC3, 0xE9, 0x25, 0xC0};
-  //  int status = WiFi.begin(ssid, pass, bssid);
+  //  Static IP otherwise esp8266 does not connect correctly
   IPAddress ip(192, 168, 43, 10);
   IPAddress gw(192, 168, 43, 1);
   IPAddress nm(255, 255, 255, 0);
   WiFi.config(ip, gw, gw, nm);
+  
   int status = WiFi.begin(ssid, pass);
 
   if (status == WL_CONNECTED) {
@@ -67,15 +53,9 @@ void setup() {
   }
 
   Serial.println("Starting connection to server...");
+  
   if (client.connect(server, 5000)) {
     Serial.println("connected to server");
-
-//    String msg = "{\"username\":\"test\"}";
-//    String post = "POST /data HTTP/1.1 \r\n Host: "+ String(server) + ":5000 \r\n Content-Length: " + String(msg.length()) + "\r\n Content-Type: application/json \r\n\r\n" + msg + "\r\n";
-//    Serial.println(post);
-//    char copy[post.length()];
-//    post.toCharArray(copy,post.length());
-//    client.write(copy);
 
     String PostData = "{\"username\":\"test\"}";
     client.println("POST /data HTTP/1.1");
