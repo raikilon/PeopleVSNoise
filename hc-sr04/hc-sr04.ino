@@ -4,70 +4,97 @@
 
 #include <NewPing.h>
 // first sensor
-const int trigPin1 = 3;
-const int echoPin1 = 2; // never connect directly to Arduino Nano 33 because it is 5v
+const int trigPin1 = 5;
+const int echoPin1 = 4; // never connect directly to Arduino Nano 33 because it is 5v
 // second sensor
-const int trigPin2 = 5;
-const int echoPin2 = 4;
-bool check1 = true;
-bool check2 = true;
-const int distance = 100;
-int people = 0;
-unsigned long t1 = 0;
-unsigned long t2 = 0;
+const int trigPin2 = 12;
+const int echoPin2 = 11;
+
+// value to check if it is in or out direction
+bool checkIn = false;
+bool checkOut = false;
+
+// count how many people enter a room (one by one)
+int count = 0;
+// timer to reset
+unsigned long t = 0;
+
+// old ultrasonic sensor value (previous iteration)
+int ov1 = 0;
+int ov2 = 0;
+// max variation of the sensor 
+const int MAX_VARIATION = 5;
+
+// dalay before reset
+const int DELAY = 3000;
+
+
+// ultrasonic sensor object
 NewPing sonar(trigPin1, echoPin1);
 NewPing sonar2(trigPin2, echoPin2);
+
+
 void setup() {
   Serial.begin(115200);
+
+  // inizialise values
+  ov1 = int(sonar.ping_cm());
+  // delay between readings otherwise it does not work correctly
+  delay(50);
+  ov2 = int(sonar2.ping_cm());
 }
 
 void loop() {
   delay(100);
 
   int v1 = int(sonar.ping_cm());
+  delay(50);
   int v2 = int(sonar2.ping_cm());
 
-
-  if (v1 < distance and check1 == true) {
-    t1 = millis();
-    check1 = false;
+  // if there are not action for DELAY time reset values
+  if (millis() - t > DELAY) {
+    reset();
   }
 
-  if (v2 < distance and check2 == true) {
-    t2 = millis();
-    check2 = false;
-  }
-  Serial.println(t1);
-  Serial.println(t2);
-
-  if (t1 > 0 and t2 > 0) {
-    Serial.println(t1 - t2);
-    if (t1 - t2 < 0 ) {
-      people ++;
-      reset(v1, v2);
-    } else if (t1 - t2 > 0) {
-      people--;
-      reset(v1, v2);
+  // value can vary a little bit
+  // if it change more (it decrease drastically), someone is on v1
+  if (v1 < ov1 - MAX_VARIATION) {
+    // if somebody was detected before in out sensor then somebody is leaving
+    if (checkOut ==  true) {
+      count--;
+      Serial.println("OUT");
+      reset();
+    } else {
+      checkIn = true;
     }
+
+    t =  millis();
+  } 
+  if (v2 < ov2 - MAX_VARIATION) {
+    if (checkIn ==  true) {
+      count++;
+      Serial.println("IN");
+      reset();
+    } else {
+      checkOut = true;
+    }
+
+    t =  millis();
   }
 
+  // replace old values
+  ov1 = v1;
+  ov2 = v2;
+
+  //Serial.print(String(v1));
+  //Serial.print("-");
+  //Serial.println(String(v2));
 
 
-
-
-  Serial.print(String(v1));
-  Serial.print("-");
-  Serial.println(String(v2));
-
-
-  Serial.println("People: " + String(people));
+  //Serial.println("People: " + String(count));
 }
 
-void reset(int v1, int v2) {
-  if (v1 > distance and v2 > distance) {
-    t1 = 0;
-    t2 = 0;
-    check1 = true;
-    check2 = true;
-  }
+void reset() {
+  checkIn  = false;
+  checkOut = false;
 }
