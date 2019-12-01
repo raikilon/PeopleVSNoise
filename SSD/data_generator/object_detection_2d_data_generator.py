@@ -1072,7 +1072,6 @@ class DataGenerator:
                                 inverse_transforms.append(inverse_transform)
                             else:
                                 batch_X[i], batch_y[i] = transform(batch_X[i], batch_y[i])
-
                             if batch_X[i] is None: # In case the transform failed to produce an output image, which is possible for some random transforms.
                                 batch_items_to_remove.append(i)
                                 batch_inverse_transforms.append([])
@@ -1158,7 +1157,7 @@ class DataGenerator:
             #########################################################################################
             # Compose the output.
             #########################################################################################
-
+            batch_X = batch_X.reshape((-1, 96, 96, 1))
             ret = []
             if 'processed_images' in returns: ret.append(batch_X)
             if 'encoded_labels' in returns: ret.append(batch_y_encoded)
