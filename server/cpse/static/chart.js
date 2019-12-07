@@ -15,7 +15,7 @@
 
     let db_labels = [
       {"db": 20, "label":"Mosquito"},
-      {"db": 30, "label":"Quiet rrom"},
+      {"db": 30, "label":"Quiet room"},
       {"db": 60, "label":"Chatting"},
       {"db": 70, "label":"Near a motorway"},
       {"db": 80, "label":"Busy crossroads"},
@@ -76,11 +76,13 @@
           yAxes: [{
             ticks: {
               beginAtZero: true,
+              max: 120,
               // Add the decibel label to the Y axis
               callback: function(value, index, values) {
                 for (let entry of db_labels) {
-                  if (entry.db === value)
-                    return value + ' ' + entry['label']
+                  if (entry.db === value) {
+                    return value + ' ' + entry.label
+                  }
                 }
                 return value;
             }

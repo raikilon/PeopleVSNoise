@@ -92,7 +92,7 @@ def create_app(test_config=None):
         for t in tuples:
             obj = pickle.loads(t)
             dt_object = datetime.fromtimestamp(obj[0])
-            print("Date: {}\tdb: {}".format(dt_object, obj[1]))
+            # print("Date: {}\tdb: {}".format(dt_object, obj[1]))
             decibels.append({"ts": dt_object.strftime("%d/%m/%Y %H:%M:%S"), "db": obj[1]})
         return decibels
 

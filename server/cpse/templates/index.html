@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Auto refresh every 5 seconds -->
-        <meta http-equiv="refresh" content="5" >
+        <!-- <meta http-equiv="refresh" content="5" > -->
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -21,19 +21,22 @@
     </head>
     <body>
         <h1 class="text-center text-white bg-dark">People Vs Noise Application</h1>
+
         <h2><span class="oi oi-people"> </span>{{people.number}} people in the room (Average: TO ADD)</h2>
+        
         {% set last_entry = decibels|last %}
         <h2 class="inline">Noise Level: {{ last_entry.db }} dB / </h2>
         {% if last_entry.db <= 40 %}
         <h2 class="text-success inline">Quiet</h2>
         <h2 class="inline"><span class="oi oi-volume-off"></span></h2>
-        {% elif  last_entry.db <= 60 %}
+        {% elif last_entry.db <= 60 %}
         <h2 class="text-warning inline">Moderate</h2>
         <h2 class="inline"><span class="oi oi-volume-low"></span></h2>
         {% else %}
         <h2 class="text-danger inline">Loud</h2>
         <h2 class="inline"><span class="oi oi-volume-high"></span></h2>
         {% endif %}
+        
         <!-- {% for db in decibels %}
         <div><p>{{ db.ts }}: <b>{{ db.db }} decibels</b></p></div>
         {% endfor %} -->
