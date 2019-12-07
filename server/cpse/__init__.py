@@ -2,9 +2,9 @@ from datetime import datetime
 import os, io, base64, pickle, re, json
 
 from flask import Flask, request
-# from flask_redis import FlaskRedis
+from flask_redis import FlaskRedis
 
-# redis_client = FlaskRedis()
+redis_client = FlaskRedis()
 
 total_img = ""
 total_count = -1
@@ -13,7 +13,7 @@ count = -1
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    # redis_client.init_app(app)
+    redis_client.init_app(app)
     # app.config.from_mapping(
     #     SECRET_KEY='dev',
     #     DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -39,19 +39,23 @@ def create_app(test_config=None):
         # print(n_people)
         return 'Hello, World!'
 
-    @app.route('/set_redis')
-    def set_redis():
-        ts = datetime.now().timestamp()
-        tup_db = (ts, 49)
-        # redis_client.lpush('db_values', pickle.dumps(tup_db))
+    @app.route('/decibels', methods=['POST'])
+    def set_decibels():
+        print(request.is_json)
+        if request.is_json:
+            data = request.get_json()
+            decibels = int(data['db'])
+            ts = datetime.now().timestamp()
+            tup_db = (ts, decibels)
+            redis_client.lpush('db_values', pickle.dumps(tup_db))
         return 'Setted tuple Redis'
 
-    @app.route('/get_redis')
-    def get_redis():
-        # db_values = redis_client.lpop('db_values')
-        # if (db_values is not None):
-        #     obj = pickle.loads(db_values)
-        #     print(obj)
+    @app.route('/getdecibels')
+    def get_decibels():
+        db_values = redis_client.lpop('db_values')
+        if (db_values is not None):
+            obj = pickle.loads(db_values)
+            print(obj)
         return 'Getted tuple Redis'
 
     @app.route('/img', methods=['POST'])
@@ -78,7 +82,7 @@ def create_app(test_config=None):
             print("Count: {}".format(count))
             if (count == 0):
                 image_64_decode = base64.b64decode(total_img)
-                img_name = datetime.now().strftime("pic_%d_%m_%Y_%H_%M_%S") + ".jpg"
+                img_name = datetime.now().strftime("pics/pic_%d_%m_%Y_%H_%M_%S") + ".jpg"
                 with open(img_name, "wb") as f:
                     f.write(image_64_decode)
                 print("Image \"{}\" saved!".format(img_name))
