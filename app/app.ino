@@ -1,44 +1,41 @@
-// Required by Arducam library
 #include <SPI.h>
 #include <Wire.h>
 #include "base64.hpp"
 #include <memorysaver.h>
-// Arducam library
 #include <ArduCAM.h>
-// JPEGDecoder library
 #include <JPEGDecoder.h>
-
 #include <WiFiEspAT.h>
 
-// The pin connected to the Arducam Chip Select
 #define CS 7
-uint8_t temp;
-bool is_header = false;
-// Camera library instance
-ArduCAM myCAM(OV2640, CS);
 
-bool check = true;
-
+// SETTINGS
 const char ssid[] = "DrawsHoutlet 2.4";    // your network SSID
-const char pass[] = "piggy4-Nerve7-Alpha3";    // your network password (use for WPA, or use as key for WEP)
-
+const char pass[] = "piggy4-Nerve7-Alpha3";    // your network password
 const char* server = "192.168.1.34"; // server adress
-unsigned int base64_length;
-const int buffsize  = 2000;
-uint8_t  buff[buffsize];
+const int buffsize  = 2000;  // Size of each http request
+bool PRINT = false; // Debug
+
+// Arducam variables
+ArduCAM myCAM(OV2640, CS);
+uint8_t temp;
+uint8_t temp_last;
+bool is_header = false;
+uint32_t length;
+uint32_t lengthb;
+uint8_t buff[buffsize];
 int mod;
 int division;
 int packet_size = 0;
 int count = 0;
+unsigned int base64_length;
 
-bool PRINT = false;
-
+//WiFi virable
 WiFiClient client;
-
+const IPAddress ip(192, 168, 1, 35);
+const IPAddress gw(192, 168, 1, 1);
+const IPAddress nm(255, 255, 255, 0);
 
 void setup() {
-  // put your setup code here, to run once:
-
   if (PRINT) {
     Serial.begin(115200);
     while (!Serial);
@@ -48,23 +45,22 @@ void setup() {
   Serial1.begin(115200);
   WiFi.init(Serial1);
 
+  // ########### INIT WIFI ###########
+
   if (WiFi.status() == WL_NO_MODULE) {
     myPrint("Communication with WiFi module failed!");
-    while (1) {}
+    while (1) {} // do not continue
   }
 
   WiFi.endAP(true); // to disable default automatic start of persistent AP at startup
 
   WiFi.setPersistent(); // set the following WiFi connection as persistent
 
-
   myPrint("Attempting to connect to SSID: ");
   myPrint(ssid);
 
   //  Static IP otherwise esp8266 does not connect correctly
-  IPAddress ip(192, 168, 1, 35);
-  IPAddress gw(192, 168, 1, 1);
-  IPAddress nm(255, 255, 255, 0);
+
   WiFi.config(ip, gw, gw, nm);
 
   int status = WiFi.begin(ssid, pass);
@@ -78,11 +74,9 @@ void setup() {
     while (1);
   }
 
+  // ########### INIT ARDUCAM ###########
 
-  myPrint("Attempting to start Arducam");
   Wire.begin();
-  myPrint("Wire inizialized");
-  // Configure the CS pin
   pinMode(CS, OUTPUT);
   digitalWrite(CS, HIGH);
   // initialize SPI
@@ -99,11 +93,11 @@ void setup() {
     myCAM.write_reg(ARDUCHIP_TEST1, 0x55);
     temp = myCAM.read_reg(ARDUCHIP_TEST1);
     if (temp != 0x55) {
-      //myPrint(F("ACK CMD SPI interface Error! END"));
+      myPrint(F("ACK CMD SPI interface Error! END"));
       delay(1000);
       continue;
     } else {
-      //myPrint(F("ACK CMD SPI interface OK. END"));
+      myPrint(F("ACK CMD SPI interface OK. END"));
       break;
     }
   }
@@ -120,50 +114,35 @@ void setup() {
 
 void loop() {
   myPrint("Starting capture");
-  // Make sure the buffer is emptied before each capture
-  myCAM.flush_fifo();
+  myCAM.flush_fifo(); // Make sure the buffer is emptied before each capture
   myCAM.clear_fifo_flag();
-  // Start capture
-  myCAM.start_capture();
+  myCAM.start_capture(); // Start capture
   // Wait for indication that it is done
   while (!myCAM.get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK)) {}
   myPrint("Image captured");
-  delay(50);
-  myPrint("calling burst");
-  read_fifo_burst(myCAM);
-  //Clear the capture done flag
-  myCAM.clear_fifo_flag();
-
   //delay(50);
-}
 
+  // ########### READ PICTURE ###########
 
-void myPrint(String str) {
-  if (PRINT) {
-    Serial.println(str);
-  }
-
-}
-
-uint8_t read_fifo_burst(ArduCAM myCAM)
-{
-  uint32_t length = 0;
   length = myCAM.read_fifo_length();
 
-  const uint32_t lengthb = length;
+  lengthb = length;
 
   unsigned char binary[lengthb];
-  uint8_t temp = 0, temp_last = 0;
+  unsigned char base64[4 * (lengthb / 3)];
+
+  temp = 0;
+  temp_last = 0;
 
   if (length >= MAX_FIFO_SIZE) //512 kb
   {
     myPrint(F("ACK CMD Over size. END"));
-    return 0;
+    return;
   }
   if (length == 0 ) //0 kb
   {
     myPrint(F("ACK CMD Size is 0. END"));
-    return 0;
+    return;
   }
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();//Set fifo burst mode
@@ -192,9 +171,11 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
   myCAM.CS_HIGH();
   is_header = false;
 
+  // ########### START SENDING PICTURE ###########
+
   myPrint("start sending");
 
-  unsigned char base64[4 * (lengthb / 3)];
+
   base64_length = encode_base64(binary, lengthb, base64);
 
   mod = base64_length % buffsize;
@@ -211,23 +192,7 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
 
   // wait for connection
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    myPrint("waiting");
-    WiFi.endAP(true); // to disable default automatic start of persistent AP at startup
-
-    WiFi.setPersistent(); // set the following WiFi connection as persistent
-
-    myPrint("Attempting to connect to SSID: ");
-    myPrint(ssid);
-
-    //  Static IP otherwise esp8266 does not connect correctly
-    IPAddress ip(192, 168, 43, 10);
-    IPAddress gw(192, 168, 43, 1);
-    IPAddress nm(255, 255, 255, 0);
-    WiFi.config(ip, gw, gw, nm);
-
-    int status = WiFi.begin(ssid, pass);
-
+    reconnect();
   }
 
   String data = "{\"count\":" + String(count) + "}";
@@ -242,12 +207,8 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
     client.println("Content-Type: application/json");
     client.println();
     client.println(data);
-
     client.flush();
   }
-
-
-
 
   for (int i = 0; i < count; i++) {
     if (mod != 0 and i + 1 == count )
@@ -261,22 +222,7 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
 
     // wait for connection
     while (WiFi.status() != WL_CONNECTED) {
-      delay(1000);
-      myPrint("waiting");
-      WiFi.endAP(true); // to disable default automatic start of persistent AP at startup
-
-      WiFi.setPersistent(); // set the following WiFi connection as persistent
-
-      myPrint("Attempting to connect to SSID: ");
-      myPrint(ssid);
-
-      //  Static IP otherwise esp8266 does not connect correctly
-      IPAddress ip(192, 168, 43, 10);
-      IPAddress gw(192, 168, 43, 1);
-      IPAddress nm(255, 255, 255, 0);
-      WiFi.config(ip, gw, gw, nm);
-
-      int status = WiFi.begin(ssid, pass);
+      reconnect();
     }
     if (client.connect(server, 5000)) {
       client.println("POST /img HTTP/1.1");
@@ -305,5 +251,30 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
 
   client.stop();
 
-  return 1;
+  //Clear the capture done flag
+  myCAM.clear_fifo_flag();
+
+  //delay(50);
+}
+
+
+void myPrint(String str) {
+  if (PRINT) {
+    Serial.println(str);
+  }
+}
+
+void reconnect() {
+  delay(1000);
+  myPrint("waiting");
+  WiFi.endAP(true); // to disable default automatic start of persistent AP at startup
+
+  WiFi.setPersistent(); // set the following WiFi connection as persistent
+
+  myPrint("Attempting to connect to SSID: ");
+  myPrint(ssid);
+
+  WiFi.config(ip, gw, gw, nm);
+
+  int status = WiFi.begin(ssid, pass);
 }
