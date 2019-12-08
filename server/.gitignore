@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/flask,python,virtualenv
 # Edit at https://www.gitignore.io/?templates=flask,python,virtualenv
 
+### PICS ###
+pics/*
+
 ### Flask ###
 instance/*
 !instance/.gitignore
