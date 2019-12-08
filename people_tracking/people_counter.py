@@ -5,8 +5,8 @@ from keras import backend as K
 from keras.preprocessing import image
 from keras.optimizers import Adam
 
-from models.keras_ssd300 import ssd_300
-from keras_loss_function.keras_ssd_loss import SSDLoss
+from SSD.models.keras_ssd300 import ssd_300
+from SSD.keras_loss_function.keras_ssd_loss import SSDLoss
 
 import numpy as np
 import dlib
@@ -50,7 +50,7 @@ model = ssd_300(image_size=(img_height, img_width, 3),
 
 # 2: Load the trained weights into the model.
 
-weights_path = '../SSD/VGG_VOC0712_SSD_300x300_ft_iter_120000.h5'
+weights_path = 'SSD/VGG_VOC0712_SSD_300x300_ft_iter_120000.h5'
 
 model.load_weights(weights_path, by_name=True)
 

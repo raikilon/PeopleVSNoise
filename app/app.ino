@@ -134,7 +134,7 @@ void loop() {
   //Clear the capture done flag
   myCAM.clear_fifo_flag();
 
-  delay(300);
+  //delay(50);
 }
 
 
@@ -299,7 +299,7 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
         Serial.write(c);
       }
     }
-    delay(100);
+    //delay(50);
 
   }
 

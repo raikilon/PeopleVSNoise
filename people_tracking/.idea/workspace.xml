@@ -2,15 +2,86 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a686c170-367a-4dd2-8c3f-6abac1b0d290" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../SSD/ModelDivision.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../SSD/ModelDivision.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/.github/stale.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ISSUE_TEMPLATE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ModelDivision.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/bounding_box_utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/bounding_box_utils/bounding_box_utils.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SSD/converted_model.tflite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/data_augmentation_chain_constant_input_size.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/data_augmentation_chain_original_ssd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/data_augmentation_chain_satellite.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/data_augmentation_chain_variable_input_size.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_data_generator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_geometric_ops.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_image_boxes_validation_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_misc_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_patch_sampling_ops.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/data_generator/object_detection_2d_photometric_ops.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/eval_utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/eval_utils/average_precision_evaluator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/eval_utils/coco_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/fish-bike.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SSD/examples/fish_bike.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_07.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_08.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd300_pascalVOC_pred_09.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd7_udacity_traffic_pred_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd7_udacity_traffic_pred_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd7_udacity_traffic_pred_03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd7_udacity_traffic_pred_04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/ssd7_udacity_traffic_pred_05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_01_no_gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_02_no_gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_03_no_gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_04_no_gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_05_no_gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/examples/trained_ssd300_pascalVOC2007_test_pred_06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_layers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_layers/keras_layer_AnchorBoxes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_layers/keras_layer_DecodeDetections.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_layers/keras_layer_DecodeDetectionsFast.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_layers/keras_layer_L2Normalization.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_loss_function/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/keras_loss_function/keras_ssd_loss.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/misc_utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/misc_utils/tensor_sampling_utils.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SSD/model.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SSD/model1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSD/model_data.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../SSD/model_data.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSD/models/keras_ssd7.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SSD/models/keras_ssd7.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SSD/ssd7_training.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../SSD/ssd7_training.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/model_data.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/models/keras_ssd300.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/models/keras_ssd512.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/models/keras_ssd512my.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/models/keras_ssd7.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ssd7_training.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ssd_encoder_decoder/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ssd_encoder_decoder/matching_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ssd_encoder_decoder/ssd_input_encoder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/ssd_encoder_decoder/ssd_output_decoder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/training_summaries/ssd300_pascal_07+12_loss_history.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SSD/training_summaries/ssd300_pascal_07+12_training_summary.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/app.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../app/app.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/people_counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/people_counter.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,41 +90,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/people_counter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="100" column="23" lean-forward="true" selection-start-line="100" selection-start-column="23" selection-end-line="100" selection-end-column="23" />
-              <folding>
-                <element signature="e#32#89#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyimagesearch/trackableobject.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyimagesearch/centroidtracker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="53" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="53" />
-              <folding>
-                <element signature="e#32#74#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -97,7 +134,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -114,9 +150,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -151,26 +189,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575712282788</updated>
-      <workItem from="1575712285414" duration="8667000" />
+      <workItem from="1575712285414" duration="8944000" />
+      <workItem from="1575793179319" duration="32000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8667000" />
+    <option name="totallyTimeSpent" value="8976000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2863248" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2899878" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -178,23 +210,29 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pyimagesearch/centroidtracker.py">
+    <entry file="file://$PROJECT_DIR$/people_counter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="53" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="53" />
+        <state relative-caret-position="780">
+          <caret line="52" column="16" lean-forward="true" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
           <folding>
-            <element signature="e#32#74#0" expanded="true" />
+            <element signature="e#32#89#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -206,12 +244,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people_counter.py">
+    <entry file="file://$PROJECT_DIR$/pyimagesearch/centroidtracker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="100" column="23" lean-forward="true" selection-start-line="100" selection-start-column="23" selection-end-line="100" selection-end-column="23" />
+        <state relative-caret-position="90">
+          <caret line="6" column="53" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="53" />
           <folding>
-            <element signature="e#32#89#0" expanded="true" />
+            <element signature="e#32#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
