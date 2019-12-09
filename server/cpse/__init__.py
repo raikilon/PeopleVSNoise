@@ -43,21 +43,8 @@ def create_app(test_config=None):
         app.logger.info("total_people setted to %d", total_people)
         return 'OK'
 
-    def get_avg_people():
-        avg_people = redis_client.get("avg_people")
-        # total_people = request.args.get('total')
-        print("Avg People: {}".format(avg_people))
-        return avg
-
-    # def update_avg(n_people):
-    #     avg_people = get_avg_people()
-
-
-    #     return avg
-
     @app.route('/people', methods=['POST'])
     def set_people():
-        print(request.is_json)
         if request.is_json:
             data = request.get_json()
             n_people = int(data['n_people'])
@@ -74,7 +61,6 @@ def create_app(test_config=None):
     ### Decibels ###
     @app.route('/decibels', methods=['POST'])
     def set_decibels():
-        print(request.is_json)
         if request.is_json:
             data = request.get_json()
             decibels = int(data['db'])
@@ -97,7 +83,7 @@ def create_app(test_config=None):
         return decibels
 
     @app.route('/pop')
-    def pip():
+    def pop():
         db_values = redis_client.lpop('db_values')
         if (db_values is not None):
             obj = pickle.loads(db_values)
@@ -141,9 +127,6 @@ def create_app(test_config=None):
     ### Main ###
     @app.route('/')
     def index():
-        # redis_client.set("n_people", 1)
-        # n_people = redis_client.get("n_people")
-        # print(n_people)
         people = {"number": get_people()}
         decibels = get_decibels()
         return render_template('index.html', people=people, decibels=decibels)

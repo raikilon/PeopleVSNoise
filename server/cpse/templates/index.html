@@ -5,8 +5,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Auto refresh every 5 seconds -->
-        <!-- <meta http-equiv="refresh" content="5" > -->
+        <!-- Auto refresh every 10 seconds -->
+        <meta http-equiv="refresh" content="10" >
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -22,7 +22,7 @@
     <body>
         <h1 class="text-center text-white bg-dark">People Vs Noise Application</h1>
 
-        <h2><span class="oi oi-people"> </span>{{people.number}} people in the room (Average: TO ADD)</h2>
+        <h2><span class="oi oi-people"></span> {{people.number}} people in the room</h2>
         
         {% set last_entry = decibels|last %}
         <h2 class="inline">Noise Level: {{ last_entry.db }} dB / </h2>
@@ -58,7 +58,6 @@
     
         <script>let decibels = {{ decibels|tojson }}</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='chart.js') }}"></script>
     </body>

@@ -32,26 +32,8 @@
       type: 'line',
       data: {
         labels: time_list,
-        // [
-        //   'Sunday',
-        //   'Monday',
-        //   'Tuesday',
-        //   'Wednesday',
-        //   'Thursday',
-        //   'Friday',
-        //   'Saturday'
-        // ],
         datasets: [{
           data: db_list,
-          // [
-          //   15339,
-          //   21345,
-          //   18483,
-          //   24003,
-          //   23489,
-          //   24092,
-          //   12034
-          // ],
           lineTension: 0,
           backgroundColor: 'transparent',
           borderColor: '#007bff',
