@@ -1,4 +1,3 @@
-# import the necessary packages
 from pyimagesearch.centroidtracker import CentroidTracker
 from pyimagesearch.trackableobject import TrackableObject
 from keras import backend as K
@@ -12,7 +11,11 @@ import numpy as np
 import dlib
 import cv2
 import os
+import requests
 
+
+url = "http://192.168.43.75:5000/people"
+send_data = False
 # Neural Netowrks settings and load
 
 # Set the image size.
@@ -73,7 +76,7 @@ H = img_height
 # instantiate our centroid tracker, then initialize a list to store
 # each of our dlib correlation trackers, followed by a dictionary to
 # map each unique object ID to a TrackableObject
-ct = CentroidTracker(maxDisappeared=1, maxDistance=100)
+ct = CentroidTracker(maxDisappeared=40, maxDistance=2000)
 trackers = []
 trackableObjects = {}
 
@@ -176,7 +179,7 @@ while True:
             # update the tracker and grab the updated position
             tracker.update(rgb)
             pos = tracker.get_position()
-
+            pos = tracker.get_position()
             # unpack the position object
             startX = int(pos.left())
             startY = int(pos.top())
@@ -189,7 +192,7 @@ while True:
     # draw a horizontal line in the center of the frame -- once an
     # object crosses this line we will determine whether they were
     # moving 'up' or 'down'
-    cv2.line(frame, (0, H // 2), (W, H // 2), (0, 255, 255), 2)
+    cv2.line(frame, (0, int(H // 2)), (W, int(H // 2)), (0, 255, 255), 2)
 
     # use the centroid tracker to associate the (1) old object
     # centroids with (2) the newly computed object centroids
@@ -214,7 +217,7 @@ while True:
             # 'up' and positive for 'down')
             y = [c[1] for c in to.centroids]
             direction = centroid[1] - np.mean(y)
-            if(-2 < direction < 2): direction = 0
+            if(-4 < direction < 4): direction = 0
             to.centroids.append(centroid)
 
             # check to see if the object has been counted or not
@@ -222,16 +225,20 @@ while True:
                 # if the direction is negative (indicating the object
                 # is moving up) AND the centroid is above the center
                 # line, count the object
-                if direction < 0 and centroid[1] < H // 2:
+                if direction < 0 and centroid[1] < int(H // 2):
                     totalUp += 1
                     to.counted = True
+                    send_data = True
 
                 # if the direction is positive (indicating the object
                 # is moving down) AND the centroid is below the
                 # center line, count the object
-                elif direction > 0 and centroid[1] > H // 2:
+                elif direction > 0 and centroid[1] > int(H // 2):
                     totalDown += 1
                     to.counted = True
+                    send_data = True
+
+               
 
         # store the trackable object in our dictionary
         trackableObjects[objectID] = to
@@ -264,6 +271,11 @@ while True:
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
+
+    if send_data:
+        myobj = {"n_people": max(totalDown-totalUp,0)}
+        x = requests.post(url, json = myobj)
+        send_data = False
 
     # increment the total number of frames processed thus far and
     # then update the FPS counter
