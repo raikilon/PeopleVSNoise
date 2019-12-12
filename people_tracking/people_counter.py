@@ -75,7 +75,7 @@ H = img_height
 # instantiate our centroid tracker, then initialize a list to store
 # each of our dlib correlation trackers, followed by a dictionary to
 # map each unique object ID to a TrackableObject
-ct = CentroidTracker(maxDisappeared=1, maxDistance=2000)
+ct = CentroidTracker(maxDisappeared=2, maxDistance=2000)
 trackers = []
 trackableObjects = {}
 
@@ -102,7 +102,6 @@ while True:
     # object detection method to aid our tracker
     if len(elems) != 0:
         img_path = min(elems)[0]
-        print(img_path)
         input_images = []
         frame = cv2.imread(img_path)
         frame = cv2.resize(frame, (img_height, img_width))
@@ -124,7 +123,6 @@ while True:
         for box in y_pred_thresh[0]:
             if box[0] == 15:
                 persons.append(box)
-        print(persons)
         for box in persons:
             xmin = box[2]
             ymin = box[3]

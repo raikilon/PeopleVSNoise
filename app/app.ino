@@ -9,9 +9,9 @@
 #define CS 7
 
 // SETTINGS
-const char ssid[] = "DrawsHoutlet 2.4";    // your network SSID
-const char pass[] = "piggy4-Nerve7-Alpha3";    // your network password
-const char* server = "192.168.1.34"; // server adress
+const char ssid[] = "...";    // your network SSID
+const char pass[] = "...";    // your network password
+const char* server = "192.168.43.134"; // server adress
 const int buffsize  = 2000;  // Size of each http request
 bool PRINT = false; // Debug
 
@@ -31,8 +31,8 @@ unsigned int base64_length;
 
 //WiFi virable
 WiFiClient client;
-const IPAddress ip(192, 168, 1, 35);
-const IPAddress gw(192, 168, 1, 1);
+const IPAddress ip(192, 168, 43, 69);
+const IPAddress gw(192, 168, 43, 1);
 const IPAddress nm(255, 255, 255, 0);
 
 void setup() {
@@ -107,7 +107,7 @@ void setup() {
   myCAM.set_format(JPEG);
   myCAM.InitCAM();
   myPrint("Camera inizialized");
-  myCAM.OV2640_set_JPEG_size(OV2640_640x480);//OV2640_160x120
+  myCAM.OV2640_set_JPEG_size(OV2640_352x288);//OV2640_160x120
   delay(100);
 
 }
@@ -127,6 +127,7 @@ void loop() {
   length = myCAM.read_fifo_length();
 
   lengthb = length;
+  myPrint(String(lengthb));
 
   unsigned char binary[lengthb];
   unsigned char base64[4 * (lengthb / 3)];
@@ -148,6 +149,7 @@ void loop() {
   myCAM.set_fifo_burst();//Set fifo burst mode
   temp =  SPI.transfer(0x00);
   int i = 0;
+  myPrint(String(length));
   length --;
   while ( length-- )
   {
@@ -155,7 +157,6 @@ void loop() {
     temp =  SPI.transfer(0x00);
     if (is_header == true)
     {
-      //Serial.write(temp);
       binary[i++] = temp;
     }
     else if ((temp == 0xD8) & (temp_last == 0xFF))
@@ -224,6 +225,7 @@ void loop() {
     while (WiFi.status() != WL_CONNECTED) {
       reconnect();
     }
+    client.stop();
     if (client.connect(server, 5000)) {
       client.println("POST /img HTTP/1.1");
       client.println("User-Agent: Arduino/1.0");
@@ -245,16 +247,16 @@ void loop() {
         Serial.write(c);
       }
     }
-    //delay(50);
+    //delay(100);
 
   }
 
-  client.stop();
+  //client.stop();
 
   //Clear the capture done flag
   myCAM.clear_fifo_flag();
 
-  //delay(50);
+  //delay(500);
 }
 
 
