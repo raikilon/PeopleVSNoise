@@ -36,7 +36,7 @@ volatile int totalSquare = 0;
 float rms = 0.0;
 float db = 0.0;
 
-bool PRINT = true; // Debug
+bool PRINT = false; // Debug
 
 void myPrint(String str) {
   if (PRINT) {
@@ -60,8 +60,10 @@ void reconnect() {
 }
 
 void setup() {
+  if (PRINT) {
   Serial.begin(115200);
   while (!Serial);
+  }
 
   Serial1.begin(115200);
   WiFi.init(Serial1);
